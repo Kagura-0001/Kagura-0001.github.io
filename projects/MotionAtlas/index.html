@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="MotionAtlas: Detailed Region Captioning for Motion-Centric Videos">
+  <title>MotionAtlas</title>
+  <link rel="icon" href="assets/motionatlas_icon.png" type="image/png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap hero-inner">
+      <p class="venue">Project Page</p>
+      <div class="brand-row">
+        <span class="brand-logo">
+          <img src="assets/motionatlas_icon.png" alt="MotionAtlas logo">
+        </span>
+        <h1 class="brand-name">MotionAtlas</h1>
+      </div>
+      <p class="brand-subtitle">Detailed Region Captioning for Motion-Centric Videos</p>
+      <p class="authors">
+        Weisong Liu<sup>1*</sup>, Haochen Wang<sup>1*</sup>, Kuan Gao<sup>2*</sup>,
+        Yuhao Wang<sup>4</sup>, Yikang Zhou<sup>5</sup>, Zhongwei Ren<sup>6</sup>,
+        Jacky Mai<sup>3</sup>, Anna Wang<sup>3</sup>, Yanwei Li<sup>2</sup>,
+        Jason Li<sup>3&ddagger;</sup>, Zhaoxiang Zhang<sup>1&dagger;</sup>
+      </p>
+      <p class="affiliations">
+        <sup>1</sup>CASIA &nbsp;&nbsp; <sup>2</sup>SJTU &nbsp;&nbsp; <sup>3</sup>NTU &nbsp;&nbsp;
+        <sup>4</sup>PKU &nbsp;&nbsp; <sup>5</sup>WHU &nbsp;&nbsp; <sup>6</sup>BJTU
+      </p>
+      <p class="author-notes">
+        <span><span class="note-mark">*</span> Equal contribution.</span>
+        <span><span class="note-mark">&ddagger;</span> Project lead.</span>
+        <span><span class="note-mark">&dagger;</span> Corresponding author.</span>
+      </p>
+      <nav class="links" aria-label="Project links">
+        <a class="button muted" href="#" aria-disabled="true">Paper Soon</a>
+        <a class="button" href="https://github.com/Kagura-0001/MotionAtlas">
+          <span class="button-icon github-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" role="img">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 0.75C5.79 0.75 0.75 5.79 0.75 12c0 4.97 3.22 9.18 7.69 10.67 0.56 0.1 0.77-0.24 0.77-0.54 0-0.27-0.01-1.16-0.02-2.1-3.13 0.68-3.79-1.33-3.79-1.33-0.51-1.3-1.25-1.65-1.25-1.65-1.02-0.7 0.08-0.69 0.08-0.69 1.13 0.08 1.73 1.16 1.73 1.16 1 1.72 2.63 1.22 3.27 0.93 0.1-0.73 0.39-1.22 0.71-1.5-2.5-0.28-5.13-1.25-5.13-5.56 0-1.23 0.44-2.23 1.16-3.02-0.12-0.28-0.5-1.43 0.11-2.98 0 0 0.95-0.3 3.1 1.15 0.9-0.25 1.86-0.38 2.82-0.38s1.92 0.13 2.82 0.38c2.15-1.45 3.09-1.15 3.09-1.15 0.62 1.55 0.23 2.7 0.12 2.98 0.72 0.79 1.16 1.79 1.16 3.02 0 4.32-2.63 5.27-5.14 5.55 0.4 0.35 0.76 1.04 0.76 2.09 0 1.51-0.01 2.73-0.01 3.1 0 0.3 0.2 0.65 0.77 0.54A11.25 11.25 0 0 0 23.25 12C23.25 5.79 18.21 0.75 12 0.75z"></path>
+            </svg>
+          </span>
+          Code
+        </a>
+        <a class="button" href="https://huggingface.co/datasets/maxLWSv2/motionaltas-bench">
+          <span class="button-icon hf-icon" aria-hidden="true">🤗</span>
+          Benchmark
+        </a>
+        <a class="button" href="https://huggingface.co/datasets/maxLWSv2/motionaltas-data">
+          <span class="button-icon hf-icon" aria-hidden="true">🤗</span>
+          Data
+        </a>
+        <a class="button" href="#bibtex">BibTeX</a>
+      </nav>
+      <p class="tldr">
+        <strong>TL;DR:</strong> MotionAtlas shifts motion captioning from global video descriptions to region-aware motion captions, enabling precise evaluation through MotionAtlas-Bench and scalable training through MotionAtlas-Data.
+      </p>
+    </div>
+  </header>
+
+  <main>
+    <section class="band intro-band" id="intro" aria-labelledby="intro-title">
+      <div class="wrap section intro-section">
+        <h2 id="intro-title">Intro</h2>
+        <p class="intro-lead">
+          MotionAtlas shifts motion captioning from global video descriptions to
+          <strong>region-aware motion captions</strong>, with scalable training data and
+          checklist-style evaluation over referred objects.
+        </p>
+
+        <div class="intro-panels">
+          <article class="intro-panel">
+            <header class="intro-panel-head">
+              <span class="intro-eyebrow">Benchmark Results</span>
+              <h3>Consistent Gains Across Benchmarks</h3>
+              <p>Our MotionAtlas consistently outperforms Qwen3-VL baselines across eight motion-related benchmarks.</p>
+            </header>
+            <figure class="intro-figure">
+              <img src="assets/figures/benchmark_comparison.png" alt="Quantitative comparison between MotionAtlas and Qwen3-VL baselines across eight benchmarks">
+            </figure>
+          </article>
+
+          <article class="intro-panel">
+            <header class="intro-panel-head">
+              <span class="intro-eyebrow">Evaluation</span>
+              <h3>MotionAtlas-Bench</h3>
+              <p>Each video is decomposed into events and checked through multiple-choice questions over temporal cues, kinematics, references, and local regions.</p>
+            </header>
+            <figure class="intro-figure">
+              <img src="assets/figures/teaser.png" alt="MotionAtlas teaser showing region-aware motion captioning and checklist-style evaluation">
+            </figure>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap section" id="demos" aria-labelledby="demos-title">
+      <h2 id="demos-title">Demos</h2>
+      <p class="lead">
+        Examples from <strong>MotionAtlas-Data</strong>. Given a user-specified region (highlighted in each clip),
+        MotionAtlas produces a detailed, temporally grounded description of that region. Use the arrows to browse examples.
+      </p>
+
+      <div class="gar-carousel">
+        <div class="gar-track">
+          <article class="gar-slide">
+            <div class="gar-media">
+              <video src="assets/videos/demo_gym.mp4" muted loop playsinline preload="metadata"></video>
+            </div>
+            <div class="gar-text">
+              <span class="gar-tag">Highlighted region</span>
+              <h3 class="gar-caption-label">Region Motion Caption</h3>
+              <div class="gar-caption">
+                <p>At the start of the sequence, the boy wearing a blue top stands beside the low horizontal bar. An adult woman in a dark green short-sleeve shirt supports his waist and back to assist him as he performs a forward flip. After the flip, his feet land steadily on the padded mat on the opposite side of the low bar.</p>
+                <p>Once stable on his feet, he immediately turns around, walks quickly toward the wooden steps next to the uneven bars, and climbs rapidly to the wooden jumping platform at the top. He then pushes off the platform, leaps upward with both arms fully extended, and grabs the high horizontal bar. Hanging beneath the bar with his arms completely straight, he swings gently back and forth a few times before releasing his grip. He drops straight down onto the thick bright red safety mat directly under the high bar.</p>
+                <p>His feet hit the mat first, and he bends his knees naturally to absorb the impact of landing, then straightens up to stand upright. After steadying himself, he turns and walks left across the red mat toward the side of the gym with wall bars and trampolines, moving away from the area under the high bar.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="gar-slide">
+            <div class="gar-media">
+              <video src="assets/videos/demo_dogs.mp4" muted loop playsinline preload="metadata"></video>
+            </div>
+            <div class="gar-text">
+              <span class="gar-tag">Highlighted region</span>
+              <h3 class="gar-caption-label">Region Motion Caption</h3>
+              <div class="gar-caption">
+                <p>In a static high-angle shot set on a tiled floor, a light brown dog remains standing on all fours on the light beige ceramic tiles next to a pink, long-furred dog bed. Its head is lowered, with its snout close to the head and neck area of a Corgi wearing pink printed clothes inside the bed, repeatedly nudging and sniffing the Corgi with its nose, its attention fully focused on the Corgi throughout, while its tail hangs down naturally and its front legs firmly support its weight.</p>
+                <p>When the Corgi in the bed turns around and bites a gray blanket with a white five-pointed star pattern, the light brown dog steps forward to grab the other end of the blanket, engaging in a two-way tug-of-war with the Corgi: it adjusts its center of gravity by slightly shifting its front legs, its body swaying gently with the force of the pulling, during which it briefly lifts a front paw to touch the blanket, and its head moves slightly up, down, forward, and backward following the tugging motions as the two dogs yank the blanket back and forth, its tail lifting slightly and wagging gently during the process.</p>
+                <p>After tugging for a while, the Corgi lets go of the blanket and moves close to the light brown dog's snout; the light brown dog lowers its head to nuzzle and sniff snouts with the Corgi, making no further contact with the blanket. When the Corgi grabs the blanket again, plants its front legs on the edge of the dog bed, stands up straight, and lifts its head, the light brown dog also raises its head to interact face-to-face with the upright Corgi, maintaining its standing posture throughout and making minor adjustments to its body position to sustain the interaction.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="gar-slide">
+            <div class="gar-media">
+              <video src="assets/videos/demo_dance.mp4" muted loop playsinline preload="metadata"></video>
+            </div>
+            <div class="gar-text">
+              <span class="gar-tag">Highlighted region</span>
+              <h3 class="gar-caption-label">Region Motion Caption</h3>
+              <div class="gar-caption">
+                <p>Filmed on a handheld camera that pans horizontally to track a circular communal dance formation, the footage centers on a female dancer performing the energetic, traditional Indian Garba folk dance, clad in a voluminous black embroidered flared skirt paired with a bright green sheer scarf. Throughout the sequence, she maintains consistent, even spacing from her fellow dancers, aligns her movements perfectly with the collective group rhythm, and uses small, soft stepping motions to coordinate with every turn and positional change across the formation.</p>
+                <p>She first appears with her back to the camera, her own right arm raised above her head, her left arm bent loosely in front of her torso swaying gently to the beat, while her green scarf hangs down her back. As she takes small steps and turns gradually to face the viewer&rsquo;s right, her arm positions shift fluidly with the dance. As the dance progresses, two foreground dancers&mdash;one in a deep purple embroidered long skirt, the other in a green top and bright yellow flared skirt&mdash;spin quickly clockwise to exchange positions, briefly obscuring the core dancer entirely; only a narrow strip of her green scarf remains visible during this brief occlusion.</p>
+                <p>She continues following the circular path of the formation, spinning rapidly clockwise around her own axis; the centrifugal force of her fast turns flares her heavy skirt out into a smooth, rounded arc while her green scarf is flung forward to float in front of her chest. When she turns her back fully to the camera, she transitions into fast counterclockwise spins, her skirt flaring out almost perfectly horizontal from the force of her rotation, her arms extended diagonally upward and out to her sides. As the clip concludes, she is still mid-spin, facing toward the viewer&rsquo;s front-left, her green scarf floating lightly beside her with the momentum of her turns.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="gar-slide">
+            <div class="gar-media">
+              <video src="assets/videos/demo_tunnel.mp4" muted loop playsinline preload="metadata"></video>
+            </div>
+            <div class="gar-text">
+              <span class="gar-tag">Highlighted region</span>
+              <h3 class="gar-caption-label">Region Motion Caption</h3>
+              <div class="gar-caption">
+                <p>Seen from a first-person perspective traveling through a well-lit tunnel, a dark-colored SUV is initially positioned directly ahead in the left lane. Initial Straight-Driving Phase: the black sedan is centered in the frame, directly ahead of the camera car in the left lane and driving straight toward the background. A silver sedan ahead of it in the right lane accelerates forward and quickly exits the right side of the frame.</p>
+                <p>Right Lane-Change Phase: intending to overtake a white vehicle, the distance between the two cars rapidly decreases. The black sedan smoothly steers to the right, gradually crossing the dashed white dividing line, and enters the right lane.</p>
+                <p>Emergency Left Evasive Phase: just as the black sedan enters the right lane and accelerates to pass the white car, it immediately activates its left turn signal and makes an emergency swerve to the left, darting back into the left lane and traveling diagonally toward the left side of the frame, getting as close as possible to the solid white line separating the oncoming traffic.</p>
+                <p>Post-Evasion Realignment Phase: after fully returning to the left lane, the black sedan crosses paths with a white SUV that has entered the right lane, then makes a minor rightward steering correction to straighten out and continues driving straight ahead in the left lane.</p>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <button class="gar-nav prev" type="button" aria-label="Previous example">&#10094;</button>
+        <button class="gar-nav next" type="button" aria-label="Next example">&#10095;</button>
+
+        <div class="gar-controls">
+          <button class="gar-play" type="button" aria-label="Pause autoplay">&#10073;&#10073;</button>
+          <div class="gar-dots" aria-hidden="true"></div>
+          <span class="gar-counter"></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="band">
+      <div class="wrap section three-up" aria-label="MotionAtlas highlights">
+        <article>
+          <span class="metric">2,073</span>
+          <h3>Fine-Grained MCQs</h3>
+          <p>MotionAtlas-Bench uses dense checklist-style questions to judge detailed motion captions over referred objects.</p>
+        </article>
+        <article>
+          <span class="metric">159K</span>
+          <h3>Training Samples</h3>
+          <p>MotionAtlas-Data provides scalable region-level motion captions refined to suppress fine-grained hallucinations.</p>
+        </article>
+        <article>
+          <span class="metric">23</span>
+          <h3>Verbs / Sample</h3>
+          <p>MotionAtlas-Data emphasizes dense action verbs and detailed temporal motion descriptions.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="wrap section" id="results" aria-labelledby="results-title">
+      <h2 id="results-title">Results</h2>
+      <p class="lead">
+        Training on MotionAtlas-Data improves both region-level motion captioning and broader motion-related video understanding.
+      </p>
+
+      <div class="results-grid">
+        <article class="result-card span-2">
+          <div class="result-head">
+            <span class="eyebrow">Table 3</span>
+            <h3>Main Results on MotionAtlas-Bench</h3>
+          </div>
+          <div class="table-scroll">
+            <table class="mini-table">
+              <thead>
+                <tr>
+                  <th>Model</th>
+                  <th>SF Overall</th>
+                  <th>SF Parts</th>
+                  <th>SF Kin.</th>
+                  <th>FS Overall</th>
+                  <th>FS Parts</th>
+                  <th>FS Kin.</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Gemini 3 Pro</td><td>36.4</td><td>34.7</td><td>32.0</td><td>36.5</td><td>33.5</td><td>38.1</td></tr>
+                <tr><td>GPT-5.2</td><td><strong>36.9</strong></td><td>34.0</td><td><strong>34.2</strong></td><td><strong>37.6</strong></td><td><strong>38.8</strong></td><td>36.6</td></tr>
+                <tr><td>Qwen3-VL-235B</td><td>30.5</td><td>27.8</td><td>28.9</td><td>33.7</td><td>33.2</td><td>31.1</td></tr>
+                <tr><td>Qwen3-VL-4B</td><td>19.3</td><td>20.0</td><td>14.1</td><td>21.7</td><td>22.4</td><td>16.5</td></tr>
+                <tr><td>+ MotionAtlas-Data</td><td>27.7 <span class="gain">&uarr; 8.4</span></td><td>27.9</td><td>26.9</td><td>30.1 <span class="gain">&uarr; 8.4</span></td><td>30.3</td><td>29.3</td></tr>
+                <tr><td>Qwen3-VL-8B</td><td>24.3</td><td>23.9</td><td>20.3</td><td>26.7</td><td>24.6</td><td>26.7</td></tr>
+                <tr><td>+ MotionAtlas-Data</td><td>31.6 <span class="gain">&uarr; 7.3</span></td><td>31.2</td><td>30.6</td><td>34.1 <span class="gain">&uarr; 7.4</span></td><td>33.6</td><td>33.0</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="panel-note">SF = Single-Frame Grounding, FS = Full-Sequence Grounding. Values are accuracy.</p>
+        </article>
+
+        <article class="result-card span-2">
+          <div class="result-head">
+            <span class="eyebrow">Table 4</span>
+            <h3>Motion-Related Video Understanding</h3>
+          </div>
+          <div class="table-scroll">
+            <table class="mini-table">
+              <thead>
+                <tr>
+                  <th>Model</th>
+                  <th>MotionBench</th>
+                  <th>DREAM-1K</th>
+                  <th>TOMATO</th>
+                  <th>NExT-QA</th>
+                  <th>TempCompass</th>
+                  <th>FAVOR</th>
+                  <th>TVBench</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>GPT-5.2</td><td>65.4</td><td>42.2</td><td>53.0</td><td>79.9</td><td>73.0</td><td>56.8</td><td>53.8</td></tr>
+                <tr><td>Gemini 2.5 Pro</td><td>62.0</td><td>42.7</td><td>48.6</td><td>79.8</td><td>73.7</td><td>58.8</td><td>59.9</td></tr>
+                <tr><td>Qwen3-VL-4B</td><td>55.9</td><td>35.6</td><td>27.4</td><td>71.6</td><td>69.6</td><td>47.0</td><td>47.2</td></tr>
+                <tr><td>+ MotionAtlas-Data</td><td>61.9 <span class="gain">&uarr; 6.0</span></td><td>38.9 <span class="gain">&uarr; 3.3</span></td><td>35.2 <span class="gain">&uarr; 7.8</span></td><td>74.0 <span class="gain">&uarr; 2.4</span></td><td>74.2 <span class="gain">&uarr; 4.6</span></td><td>55.0 <span class="gain">&uarr; 8.1</span></td><td>51.2 <span class="gain">&uarr; 4.0</span></td></tr>
+                <tr><td>Qwen3-VL-8B</td><td>59.0</td><td>38.7</td><td>34.0</td><td>76.9</td><td>71.8</td><td>54.1</td><td>51.4</td></tr>
+                <tr><td>+ MotionAtlas-Data</td><td>62.6 <span class="gain">&uarr; 3.6</span></td><td>39.6 <span class="gain">&uarr; 0.9</span></td><td>36.5 <span class="gain">&uarr; 2.5</span></td><td>77.2 <span class="gain">&uarr; 0.2</span></td><td>75.1 <span class="gain">&uarr; 3.3</span></td><td>57.7 <span class="gain">&uarr; 3.6</span></td><td>52.9 <span class="gain">&uarr; 1.5</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="result-card span-2">
+          <div class="result-head">
+            <span class="eyebrow">Table 5</span>
+            <h3>Training Data Scale</h3>
+          </div>
+          <div class="table-scroll">
+            <table class="mini-table">
+              <thead>
+                <tr>
+                  <th>Method</th>
+                  <th>MotionAtlas</th>
+                  <th>MotionBench</th>
+                  <th>DREAM-1K</th>
+                  <th>TOMATO</th>
+                  <th>NExT-QA</th>
+                  <th>TempCompass</th>
+                  <th>FAVOR</th>
+                  <th>TVBench</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Qwen3-VL-4B</td><td>19.2</td><td>55.9</td><td>35.9</td><td>27.4</td><td>71.6</td><td>69.6</td><td>47.0</td><td>47.2</td></tr>
+                <tr class="group-row"><td colspan="9">w/ MotionAtlas-Data</td></tr>
+                <tr><td>20% (32K)</td><td>22.9</td><td>58.9</td><td>36.9</td><td>28.4</td><td>72.2</td><td>71.2</td><td>48.1</td><td>47.0</td></tr>
+                <tr><td>60% (95K)</td><td>24.6</td><td>59.5</td><td>37.0</td><td>30.1</td><td>73.0</td><td>72.3</td><td>50.9</td><td>49.0</td></tr>
+                <tr><td>100% (159K)</td><td><strong>28.3</strong></td><td><strong>61.9</strong></td><td><strong>38.9</strong></td><td><strong>35.2</strong></td><td><strong>74.0</strong></td><td><strong>74.2</strong></td><td><strong>55.0</strong></td><td><strong>51.2</strong></td></tr>
+                <tr class="group-row"><td colspan="9">w/o MotionAtlas-Data</td></tr>
+                <tr><td>20% (32K)</td><td>12.9</td><td>57.4</td><td>37.3</td><td>29.0</td><td>70.9</td><td>70.8</td><td>47.4</td><td>46.7</td></tr>
+                <tr><td>60% (95K)</td><td>12.9</td><td>58.8</td><td>36.9</td><td>30.7</td><td>71.3</td><td>72.3</td><td>50.6</td><td>47.4</td></tr>
+                <tr><td>100% (159K)</td><td>12.2</td><td>60.5</td><td>38.3</td><td>28.4</td><td>71.9</td><td>73.3</td><td>52.2</td><td>48.5</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="result-card">
+          <div class="result-head">
+            <span class="eyebrow">Fig. 3</span>
+            <h3>Data Scaling Curve</h3>
+          </div>
+          <svg class="line-chart" viewBox="0 0 420 260" role="img" aria-labelledby="scale-title scale-desc">
+            <title id="scale-title">Data scaling curve</title>
+            <desc id="scale-desc">Average benchmark score rises more sharply when training includes MotionAtlas-Data.</desc>
+            <line x1="58" y1="205" x2="390" y2="205" class="axis"></line>
+            <line x1="58" y1="28" x2="58" y2="205" class="axis"></line>
+            <line x1="58" y1="207" x2="390" y2="207" class="baseline"></line>
+            <text x="333" y="198" class="chart-label">Baseline 50.7</text>
+            <polyline class="chart-line primary" points="58,205 154,164 250,128 370,42"></polyline>
+            <polyline class="chart-line secondary" points="58,205 154,176 250,144 370,126"></polyline>
+            <g class="points primary-points">
+              <circle cx="58" cy="205" r="4"></circle><circle cx="154" cy="164" r="4"></circle><circle cx="250" cy="128" r="4"></circle><circle cx="370" cy="42" r="4"></circle>
+            </g>
+            <g class="points secondary-points">
+              <circle cx="58" cy="205" r="4"></circle><circle cx="154" cy="176" r="4"></circle><circle cx="250" cy="144" r="4"></circle><circle cx="370" cy="126" r="4"></circle>
+            </g>
+            <text x="46" y="224" class="tick">0%</text>
+            <text x="140" y="224" class="tick">20%</text>
+            <text x="236" y="224" class="tick">60%</text>
+            <text x="352" y="224" class="tick">100%</text>
+            <text x="316" y="39" class="chart-value">55.8</text>
+            <text x="320" y="132" class="chart-value secondary-text">53.3</text>
+            <g class="legend">
+              <rect x="76" y="42" width="11" height="11" class="legend-primary"></rect>
+              <text x="94" y="51">w/ MotionAtlas-Data</text>
+              <rect x="76" y="62" width="11" height="11" class="legend-secondary"></rect>
+              <text x="94" y="71">w/o MotionAtlas-Data</text>
+            </g>
+          </svg>
+          <p class="panel-note">Adding MotionAtlas-Data brings more significant improvements as training data scales.</p>
+        </article>
+
+        <article class="result-card">
+          <div class="result-head">
+            <span class="eyebrow">Table 6</span>
+            <h3>Pipeline Ablation</h3>
+          </div>
+          <div class="table-scroll">
+            <table class="mini-table">
+              <thead>
+                <tr><th>Method</th><th>Acc</th><th>Recall</th><th>Precision</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>MA Pipeline (full)</td><td><strong>39.9</strong></td><td><strong>68.2</strong></td><td><strong>58.5</strong></td></tr>
+                <tr><td>w/o Self-Bootstrap</td><td>36.4</td><td>64.1</td><td>56.8</td></tr>
+                <tr><td>w/o Full-Video Caption</td><td>33.2</td><td>58.9</td><td>56.4</td></tr>
+                <tr><td>w/o Spatial Crop</td><td>32.7</td><td>60.9</td><td>53.6</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="panel-note">Each component contributes to more accurate and recall-rich motion captions.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="wrap section" id="bibtex" aria-labelledby="bibtex-title">
+      <h2 id="bibtex-title">BibTeX</h2>
+      <pre><code>@article{liu2026motionatlas,
+  title={MotionAtlas: Detailed Region Captioning for Motion-Centric Videos},
+  author={Liu, Weisong and Wang, Haochen and Gao, Kuan and Wang, Yuhao and Zhou, YiKang and Ren, Zhongwei and Mai, Jacky and Wang, Anna and Li, Yanwei and Li, Jason and Zhang, Zhaoxiang},
+  journal={arXiv preprint},
+  year={2026}
+}</code></pre>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      var carousel = document.querySelector('.gar-carousel');
+      if (!carousel) return;
+
+      var slides = Array.prototype.slice.call(carousel.querySelectorAll('.gar-slide'));
+      var prevBtn = carousel.querySelector('.gar-nav.prev');
+      var nextBtn = carousel.querySelector('.gar-nav.next');
+      var playBtn = carousel.querySelector('.gar-play');
+      var dotsWrap = carousel.querySelector('.gar-dots');
+      var counter = carousel.querySelector('.gar-counter');
+
+      var current = 0;
+      var playing = true;
+      var timer = null;
+      var INTERVAL = 14000;
+
+      var dots = slides.map(function (_, i) {
+        var dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'gar-dot';
+        dot.setAttribute('aria-label', 'Go to example ' + (i + 1));
+        dot.addEventListener('click', function () { show(i); reset(); });
+        dotsWrap.appendChild(dot);
+        return dot;
+      });
+
+      function show(n) {
+        current = (n + slides.length) % slides.length;
+        slides.forEach(function (slide, i) {
+          var active = i === current;
+          slide.classList.toggle('active', active);
+          dots[i].classList.toggle('active', active);
+          var v = slide.querySelector('video');
+          if (active) {
+            try { v.currentTime = 0; v.play().catch(function () {}); } catch (e) {}
+          } else {
+            v.pause();
+          }
+        });
+        counter.textContent = (current + 1) + ' / ' + slides.length;
+      }
+
+      function change(step) { show(current + step); reset(); }
+      function start() { timer = setInterval(function () { show(current + 1); }, INTERVAL); }
+      function reset() { clearInterval(timer); if (playing) start(); }
+
+      function togglePlay() {
+        playing = !playing;
+        playBtn.innerHTML = playing ? '&#10073;&#10073;' : '&#9658;';
+        playBtn.setAttribute('aria-label', playing ? 'Pause autoplay' : 'Play autoplay');
+        reset();
+      }
+
+      prevBtn.addEventListener('click', function () { change(-1); });
+      nextBtn.addEventListener('click', function () { change(1); });
+      playBtn.addEventListener('click', togglePlay);
+
+      show(0);
+      start();
+    })();
+  </script>
+</body>
+</html>
